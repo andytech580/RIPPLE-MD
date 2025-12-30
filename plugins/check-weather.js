@@ -1,0 +1,40 @@
+const axios = require('axios');
+
+module.exports = {
+    command: "weather",
+    description: "🌤 Get weather information for a location",
+    category: "tools",
+execute: async (sock, m, { reply, args }) => {
+    try {
+        if (!args[0]) return reply("❌ Please provide a city name\nExample: .weather London");
+        
+        const city = args.join(' ');
+        const apiUrl = `https://apis.davidcyriltech.my.id/weather?city=${encodeURIComponent(city)}`;
+        
+        const { data } = await axios.get(apiUrl);
+        
+        if (!data.success) return reply("❌ Couldn't fetch weather data for that location");
+        
+        const weatherInfo = `
+🌤 *Weather for ${data.data.location}, ${data.data.country}*
+   ⏰Time: ${data.data.time}
+🌡 Temperature: ${data.data.temperature}
+💭 Feels Like: ${data.data.feels_like}
+☁ Weather: ${data.data.weather} (${data.data.description})
+
+💧 Humidity: ${data.data.humidity}
+💨 Wind Speed: ${data.data.wind_speed}
+📊 Pressure: ${data.data.pressure}
+
+📍 Coordinates: ${data.data.coordinates.latitude}, ${data.data.coordinates.longitude}
+
+_ᴘᴏᴡᴇʀᴇᴅ ʙʏ andy
+`.trim();
+
+        await reply(weatherInfo);
+        
+    } catch (error) {
+        console.error('Weather Error:', error);
+        reply("❌ Failed to fetch weather data. Please try again later.");
+    }
+} };
