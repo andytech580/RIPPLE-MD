@@ -36,7 +36,7 @@ execute:async (sock, m, { reply }) => {
             forwardingScore: 999,
             isForwarded: true,
             forwardedNewsletterMessageInfo: {
-                newsletterJid: '120363402507750390@newsletter',
+                newsletterJid: '120363421568891511@newsletter',
                 newsletterName: '𝘼𝙣𝙙𝙮-𝙩𝙚𝙘𝙝',
                 serverMessageId: 143
             }
